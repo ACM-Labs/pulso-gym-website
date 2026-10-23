@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Solicitudes | Pulso Gym</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <header class="cabecera"><div class="contenedor"><a class="logo" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Solicitudes</a><nav class="menu"><button class="boton claro" id="salir" hidden>Salir</button></nav></div></header>
+  <main class="contenedor" style="padding:32px 0">
+    <form id="acceso" class="formulario" style="max-width:420px;grid-template-columns:1fr">
+      <div class="campo"><label for="clave">Clave de administración</label><input id="clave" type="password" autocomplete="off" required></div>
+      <div class="estado-envio mal" id="error" hidden></div>
+      <button class="boton" type="submit">Entrar</button>
+    </form>
+    <div id="panel" hidden>
+      <p id="resumen" style="color:var(--texto-suave)"></p>
+      <div class="tabla-scroll"><table><thead><tr><th>Fecha</th><th>Gimnasio</th><th>Contacto</th><th>Datos</th><th>Plan</th><th>Estado</th></tr></thead><tbody id="filas"></tbody></table></div>
+    </div>
+  </main>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const ESTADOS = ["nueva", "contactada", "cerrada", "descartada"];
+    const PLANES = { mensual: "Plan Mensual", anual: "Plan Anual", perpetuo: "Perpetuo", "no-se": "Aún no lo sabe" };
+    const TAM = { "hasta-100": "hasta 100", "101-300": "101–300", "301-800": "301–800", "mas-800": "más de 800" };
+    let clave = sessionStorage.getItem("clave") ?? "";
+    const api = (metodo, cuerpo) => fetch("/api/solicitudes", { method: metodo, headers: { Authorization: "Bearer " + clave, "Content-Type": "application/json" }, body: cuerpo && JSON.stringify(cuerpo) });
+    const celda = (...nodos) => { const td = document.createElement("td"); td.append(...nodos); return td; };
+    const linea = (t) => { const d = document.createElement("div"); d.textContent = t; return d; };
+
+    async function cargar() {
+      const r = await api("GET");
+      if (!r.ok) { sessionStorage.removeItem("clave"); throw new Error(r.status === 401 ? "Clave incorrecta." : "No se pudo cargar."); }
+      const { solicitudes } = await r.json();
+      $("#acceso").hidden = true; $("#panel").hidden = false; $("#salir").hidden = false;
+      $("#resumen").textContent = `${solicitudes.length} solicitudes, ${solicitudes.filter((s) => s.estado === "nueva").length} nuevas.`;
+      $("#filas").replaceChildren(...solicitudes.map((s) => {
+        const tr = document.createElement("tr");
+        const sel = document.createElement("select");
+        ESTADOS.forEach((e) => sel.append(new Option(e, e, false, e === s.estado)));
+        sel.addEventListener("change", () => api("PATCH", { id: Number(s.id), estado: sel.value }));
+        const mail = Object.assign(document.createElement("a"), { href: "mailto:" + s.correo, textContent: s.correo });
+        const datos = [mail, linea(s.telefono), linea(s.ciudad), ...(s.ruc ? [linea("RUC " + s.ruc)] : []), ...(s.clientes ? [linea("Clientes: " + TAM[s.clientes])] : []), ...(s.mensaje ? [linea("“" + s.mensaje + "”")] : [])];
+        tr.append(celda(new Date(s.creada).toLocaleString("es-PY")), celda(s.gimnasio), celda(s.contacto), celda(...datos), celda(PLANES[s.plan] ?? "—"), celda(sel));
+        return tr;
+      }));
+    }
+    $("#acceso").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clave = $("#clave").value; sessionStorage.setItem("clave", clave);
+      try { await cargar(); } catch (err) { $("#error").hidden = false; $("#error").textContent = err.message; }
+    });
+    $("#salir").addEventListener("click", () => { sessionStorage.removeItem("clave"); location.reload(); });
+    if (clave) cargar().catch(() => {});
+  </script>
+</body>
+</html>

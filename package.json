@@ -1,0 +1,17 @@
+{
+  "name": "pulso-gym-portal",
+  "version": "0.1.0",
+  "private": true,
+  "author": "ACM Labs",
+  "license": "SEE LICENSE IN ../LICENSE",
+  "description": "Portal público de Pulso Gym (Vercel)",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "node --test pruebas/*.test.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  }
+}

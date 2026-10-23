@@ -1,0 +1,50 @@
+{
+  "moneda": "Gs.",
+  "planes": [
+    {
+      "id": "mensual",
+      "nombre": "Plan Mensual",
+      "precio": 150000,
+      "periodo": "al mes",
+      "descripcion": "Para empezar sin compromiso.",
+      "destacado": false,
+      "incluye": [
+        "Todos los módulos de Pulso Gym",
+        "Una computadora",
+        "Actualizaciones incluidas",
+        "Soporte de ACM Labs",
+        "Ayuda con la importación de tus clientes"
+      ]
+    },
+    {
+      "id": "anual",
+      "nombre": "Plan Anual",
+      "precio": 1500000,
+      "periodo": "al año",
+      "descripcion": "El mejor precio por mes.",
+      "destacado": true,
+      "incluye": [
+        "Todos los módulos de Pulso Gym",
+        "Una computadora",
+        "Actualizaciones incluidas",
+        "Soporte de ACM Labs",
+        "Ayuda con la importación de tus clientes"
+      ]
+    },
+    {
+      "id": "perpetuo",
+      "nombre": "Perpetuo",
+      "precio": 4000000,
+      "periodo": "pago único",
+      "descripcion": "Pagas una vez y es tuyo.",
+      "destacado": false,
+      "incluye": [
+        "Todos los módulos de Pulso Gym",
+        "Una computadora",
+        "Licencia sin vencimiento",
+        "Soporte de ACM Labs",
+        "Ayuda con la importación de tus clientes"
+      ]
+    }
+  ]
+}
