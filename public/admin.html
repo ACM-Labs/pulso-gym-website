@@ -19,13 +19,13 @@
     </form>
     <div id="panel" hidden>
       <p id="resumen" style="color:var(--texto-suave)"></p>
-      <div class="tabla-scroll"><table><thead><tr><th>Fecha</th><th>Gimnasio</th><th>Contacto</th><th>Datos</th><th>Plan</th><th>Estado</th></tr></thead><tbody id="filas"></tbody></table></div>
+      <div class="tabla-scroll"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Contacto</th><th>Plan</th><th>Estado</th></tr></thead><tbody id="filas"></tbody></table></div>
     </div>
   </main>
   <script>
     const $ = (s) => document.querySelector(s);
     const ESTADOS = ["nueva", "contactada", "cerrada", "descartada"];
-    const PLANES = { mensual: "Plan Mensual", anual: "Plan Anual", perpetuo: "Perpetuo", "no-se": "Aún no lo sabe" };
+    const PLANES = { mensual: "Plan Mensual", anual: "Plan Anual", perpetuo: "Perpetuo" };
     const TAM = { "hasta-100": "hasta 100", "101-300": "101–300", "301-800": "301–800", "mas-800": "más de 800" };
     let clave = sessionStorage.getItem("clave") ?? "";
     const api = (metodo, cuerpo) => fetch("/api/solicitudes", { method: metodo, headers: { Authorization: "Bearer " + clave, "Content-Type": "application/json" }, body: cuerpo && JSON.stringify(cuerpo) });
@@ -44,8 +44,8 @@
         ESTADOS.forEach((e) => sel.append(new Option(e, e, false, e === s.estado)));
         sel.addEventListener("change", () => api("PATCH", { id: Number(s.id), estado: sel.value }));
         const mail = Object.assign(document.createElement("a"), { href: "mailto:" + s.correo, textContent: s.correo });
-        const datos = [mail, linea(s.telefono), linea(s.ciudad), ...(s.ruc ? [linea("RUC " + s.ruc)] : []), ...(s.clientes ? [linea("Clientes: " + TAM[s.clientes])] : []), ...(s.mensaje ? [linea("“" + s.mensaje + "”")] : [])];
-        tr.append(celda(new Date(s.creada).toLocaleString("es-PY")), celda(s.gimnasio), celda(s.contacto), celda(...datos), celda(PLANES[s.plan] ?? "—"), celda(sel));
+        const datos = [mail, linea(s.telefono), ...(s.gimnasio ? [linea(s.gimnasio + (s.ciudad ? ", " + s.ciudad : ""))] : []), ...(s.mensaje ? [linea("“" + s.mensaje + "”")] : [])];
+        tr.append(celda(new Date(s.creada).toLocaleString("es-PY")), celda(s.contacto), celda(...datos), celda(PLANES[s.plan] ?? "—"), celda(sel));
         return tr;
       }));
     }

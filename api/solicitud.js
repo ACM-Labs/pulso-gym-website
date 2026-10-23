@@ -18,9 +18,8 @@ export default async function handler(req, res) {
       SELECT count(*)::int AS n FROM solicitudes WHERE correo = ${datos.correo} AND creada > now() - interval '1 day'`;
     if (n >= 5) return responder(res, 429, { error: "Ya recibimos tus solicitudes. Te contactaremos pronto." });
     await sql`
-      INSERT INTO solicitudes (gimnasio, contacto, correo, telefono, ciudad, ruc, clientes, plan, mensaje)
-      VALUES (${datos.gimnasio}, ${datos.contacto}, ${datos.correo}, ${datos.telefono}, ${datos.ciudad},
-              ${datos.ruc || null}, ${datos.clientes || null}, ${datos.plan || null}, ${datos.mensaje || null})`;
+      INSERT INTO solicitudes (contacto, correo, telefono, plan)
+      VALUES (${datos.contacto}, ${datos.correo}, ${datos.telefono}, ${datos.plan || null})`;
     return responder(res, 201, { ok: true });
   } catch (e) {
     console.error("solicitud:", e);

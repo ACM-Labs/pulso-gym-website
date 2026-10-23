@@ -43,11 +43,8 @@ async function cargarPlanes() {
         return art;
       }),
     );
-    planes.forEach((p) => selector.append(new Option(p.nombre, p.id)));
-    selector.append(new Option("Aún no lo sé", "no-se"));
   } catch {
     lista.textContent = "No pudimos cargar los planes. Escríbenos desde el formulario y te los enviamos.";
-    selector.append(new Option("Aún no lo sé", "no-se"));
   }
 }
 

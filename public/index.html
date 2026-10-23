@@ -126,22 +126,15 @@
       <div class="contenedor registro">
         <aside>
           <h2>Solicita Pulso Gym</h2>
-          <p>Déjanos los datos de tu gimnasio y nuestro equipo te contactará para coordinar el plan y la instalación.</p>
+          <p>Déjanos tu nombre, número de contacto y correo, y nuestro equipo te contactará para coordinar el plan y la instalación.</p>
           <p>Usamos tus datos únicamente para atender esta solicitud. Consulta la <a href="/privacidad">política de privacidad</a>.</p>
         </aside>
         <div id="zona-formulario">
           <form class="formulario" id="formulario" novalidate>
-            <div class="campo"><label for="gimnasio">Nombre del gimnasio</label><input id="gimnasio" name="gimnasio" autocomplete="organization" required maxlength="120"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="contacto">Tu nombre</label><input id="contacto" name="contacto" autocomplete="name" required maxlength="120"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="correo">Correo</label><input id="correo" name="correo" type="email" autocomplete="email" required maxlength="160"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="telefono">Teléfono / WhatsApp</label><input id="telefono" name="telefono" type="tel" autocomplete="tel" required maxlength="40" placeholder="0981 123 456"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="ciudad">Ciudad</label><input id="ciudad" name="ciudad" autocomplete="address-level2" required maxlength="80"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="ruc">RUC o cédula <small>(opcional)</small></label><input id="ruc" name="ruc" inputmode="numeric" maxlength="20" placeholder="1234567-8"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="clientes">Clientes aproximados <small>(opcional)</small></label>
-              <select id="clientes" name="clientes"><option value="">Elige una opción</option><option value="hasta-100">Hasta 100</option><option value="101-300">101 a 300</option><option value="301-800">301 a 800</option><option value="mas-800">Más de 800</option></select><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="plan">Plan de interés <small>(opcional)</small></label>
-              <select id="plan" name="plan"><option value="">Elige una opción</option></select><span class="mensaje-error"></span></div>
-            <div class="campo ancho"><label for="mensaje">Mensaje <small>(opcional)</small></label><textarea id="mensaje" name="mensaje" maxlength="1000"></textarea></div>
+            <div class="campo ancho"><label for="contacto">Nombre completo</label><input id="contacto" name="contacto" autocomplete="name" required maxlength="120"><span class="mensaje-error"></span></div>
+            <div class="campo"><label for="telefono">Número de contacto</label><input id="telefono" name="telefono" type="tel" autocomplete="tel" required maxlength="40" placeholder="0981 123 456"><span class="mensaje-error"></span></div>
+            <div class="campo"><label for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" autocomplete="email" required maxlength="160"><span class="mensaje-error"></span></div>
+            <input type="hidden" id="plan" name="plan" value="">
             <div class="campo ancho trampa" aria-hidden="true"><label for="sitio">Sitio web</label><input id="sitio" name="sitio" tabindex="-1" autocomplete="off"></div>
             <div class="campo ancho" id="campo-acepto">
               <label class="consentimiento"><input type="checkbox" id="acepto" name="acepto"><span>Acepto que ACM Labs use mis datos para contactarme sobre Pulso Gym, según la <a href="/privacidad" target="_blank" rel="noopener">política de privacidad</a>.</span></label>

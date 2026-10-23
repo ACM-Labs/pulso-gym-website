@@ -15,17 +15,20 @@ export async function prepararTabla() {
     CREATE TABLE IF NOT EXISTS solicitudes (
       id BIGSERIAL PRIMARY KEY,
       creada TIMESTAMPTZ NOT NULL DEFAULT now(),
-      gimnasio TEXT NOT NULL,
+      gimnasio TEXT,
       contacto TEXT NOT NULL,
       correo TEXT NOT NULL,
       telefono TEXT NOT NULL,
-      ciudad TEXT NOT NULL,
+      ciudad TEXT,
       ruc TEXT,
       clientes TEXT,
       plan TEXT,
       mensaje TEXT,
       estado TEXT NOT NULL DEFAULT 'nueva'
     )`;
+  // La tabla nació con más campos obligatorios; el formulario ya no los pide.
+  await base()`ALTER TABLE solicitudes ALTER COLUMN gimnasio DROP NOT NULL`;
+  await base()`ALTER TABLE solicitudes ALTER COLUMN ciudad DROP NOT NULL`;
   lista = true;
 }
 
