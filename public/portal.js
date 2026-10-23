@@ -43,7 +43,13 @@ async function cargarPlanes() {
         return art;
       }),
     );
+    planes.forEach((p) => {
+      const precio = p.precio == null ? "" : ` — ${moneda} ${p.precio.toLocaleString("es-PY")}`;
+      selector.append(new Option(p.nombre + precio, p.id));
+    });
+    selector.append(new Option("Aún no lo sé", "no-se"));
   } catch {
+    selector.append(new Option("Aún no lo sé", "no-se"));
     lista.textContent = "No pudimos cargar los planes. Escríbenos desde el formulario y te los enviamos.";
   }
 }
