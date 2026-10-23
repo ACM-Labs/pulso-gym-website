@@ -14,8 +14,19 @@ async function cargarPlanes() {
         const art = document.createElement("article");
         art.className = "plan" + (p.destacado ? " destacado" : "");
         if (p.destacado) art.append(Object.assign(document.createElement("span"), { className: "insignia", textContent: "Más elegido" }));
+        if (p.precioAnterior) {
+          art.classList.add("rebajado");
+          art.append(Object.assign(document.createElement("span"), { className: "insignia oferta", textContent: "Rebajado" }));
+        }
         const precio = document.createElement("div");
         precio.className = "precio";
+        if (p.precioAnterior) {
+          const ahorro = Math.round((1 - p.precio / p.precioAnterior) * 100);
+          precio.append(
+            Object.assign(document.createElement("s"), { className: "antes", textContent: `${moneda} ${p.precioAnterior.toLocaleString("es-PY")}` }),
+            Object.assign(document.createElement("span"), { className: "ahorro", textContent: `−${ahorro}%` }),
+          );
+        }
         precio.append(p.precio == null ? texto("Consultar") : texto(`${moneda} ${p.precio.toLocaleString("es-PY")}`));
         precio.append(" ", Object.assign(document.createElement("small"), { textContent: p.periodo }));
         const ul = document.createElement("ul");

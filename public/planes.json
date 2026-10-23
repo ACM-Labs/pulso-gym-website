@@ -4,9 +4,9 @@
     {
       "id": "mensual",
       "nombre": "Plan Mensual",
-      "precio": 150000,
+      "precio": 349000,
       "periodo": "al mes",
-      "descripcion": "Para empezar sin compromiso.",
+      "descripcion": "Oferta: empieza sin compromiso.",
       "destacado": false,
       "incluye": [
         "Todos los módulos de Pulso Gym",
@@ -14,12 +14,13 @@
         "Actualizaciones incluidas",
         "Soporte de ACM Labs",
         "Ayuda con la importación de tus clientes"
-      ]
+      ],
+      "precioAnterior": 600000
     },
     {
       "id": "anual",
       "nombre": "Plan Anual",
-      "precio": 1500000,
+      "precio": 3490000,
       "periodo": "al año",
       "descripcion": "El mejor precio por mes.",
       "destacado": true,
@@ -34,7 +35,7 @@
     {
       "id": "perpetuo",
       "nombre": "Perpetuo",
-      "precio": 4000000,
+      "precio": 5490000,
       "periodo": "pago único",
       "descripcion": "Pagas una vez y es tuyo.",
       "destacado": false,
