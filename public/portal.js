@@ -13,11 +13,14 @@ async function cargarPlanes() {
       ...planes.map((p) => {
         const art = document.createElement("article");
         art.className = "plan" + (p.destacado ? " destacado" : "");
-        if (p.destacado) art.append(Object.assign(document.createElement("span"), { className: "insignia", textContent: "Más elegido" }));
+        const insignias = document.createElement("div");
+        insignias.className = "insignias";
+        if (p.destacado) insignias.append(Object.assign(document.createElement("span"), { className: "insignia", textContent: "Más elegido" }));
         if (p.precioAnterior) {
           art.classList.add("rebajado");
-          art.append(Object.assign(document.createElement("span"), { className: "insignia oferta", textContent: "Rebajado" }));
+          insignias.append(Object.assign(document.createElement("span"), { className: "insignia oferta", textContent: "Rebajado" }));
         }
+        if (insignias.children.length) art.append(insignias);
         const precio = document.createElement("div");
         precio.className = "precio";
         if (p.precioAnterior) {
