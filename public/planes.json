@@ -30,7 +30,8 @@
         "Actualizaciones incluidas",
         "Soporte de ACM Labs",
         "Ayuda con la importación de tus clientes"
-      ]
+      ],
+      "precioAnterior": 5000000
     },
     {
       "id": "perpetuo",
@@ -45,7 +46,8 @@
         "Licencia sin vencimiento",
         "Soporte de ACM Labs",
         "Ayuda con la importación de tus clientes"
-      ]
+      ],
+      "precioAnterior": 7000000
     }
   ]
 }
