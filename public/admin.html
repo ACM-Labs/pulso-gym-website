@@ -25,7 +25,7 @@
   <script>
     const $ = (s) => document.querySelector(s);
     const ESTADOS = ["nueva", "contactada", "cerrada", "descartada"];
-    const PLANES = { mensual: "Plan Mensual", anual: "Plan Anual", perpetuo: "Perpetuo" };
+    const PLANES = { mensual: "Plan Mensual", anual: "Plan Anual", perpetuo: "De por vida" };
     const TAM = { "hasta-100": "hasta 100", "101-300": "101–300", "301-800": "301–800", "mas-800": "más de 800" };
     let clave = sessionStorage.getItem("clave") ?? "";
     const api = (metodo, cuerpo) => fetch("/api/solicitudes", { method: metodo, headers: { Authorization: "Bearer " + clave, "Content-Type": "application/json" }, body: cuerpo && JSON.stringify(cuerpo) });

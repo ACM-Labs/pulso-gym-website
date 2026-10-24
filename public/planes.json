@@ -2,22 +2,6 @@
   "moneda": "Gs.",
   "planes": [
     {
-      "id": "mensual",
-      "nombre": "Plan Mensual",
-      "precio": 349000,
-      "periodo": "al mes",
-      "descripcion": "Oferta: empieza sin compromiso.",
-      "destacado": false,
-      "incluye": [
-        "Todos los módulos de Pulso Gym",
-        "Una computadora",
-        "Actualizaciones incluidas",
-        "Soporte de ACM Labs",
-        "Ayuda con la importación de tus clientes"
-      ],
-      "precioAnterior": 600000
-    },
-    {
       "id": "anual",
       "nombre": "Plan Anual",
       "precio": 3490000,
@@ -35,7 +19,7 @@
     },
     {
       "id": "perpetuo",
-      "nombre": "Perpetuo",
+      "nombre": "De por vida",
       "precio": 5490000,
       "periodo": "pago único",
       "descripcion": "Pagas una vez y es tuyo.",

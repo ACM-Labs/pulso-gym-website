@@ -1,6 +1,6 @@
 const limpiar = (v, max) => (typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, max) : "");
 
-export const PLANES = ["mensual", "anual", "perpetuo", "no-se"];
+export const PLANES = ["anual", "perpetuo", "no-se"];
 
 /** Devuelve { datos } o { errores } con un mensaje por campo. */
 export function validarSolicitud(cuerpo) {
