@@ -108,12 +108,39 @@ form?.addEventListener("submit", async (e) => {
 
 cargarPlanes();
 
-// Escala la réplica del panel (diseñada a 1000 px) al ancho disponible y muestra la fecha de hoy.
-const lienzo = $("#demo-lienzo");
-if (lienzo) {
-  $("#demo-fecha").textContent = new Date().toLocaleDateString("es-PY", { day: "2-digit", month: "2-digit", year: "numeric" });
-  const caja = lienzo.parentElement;
-  const ajustar = () => caja.style.setProperty("--demo-k", Math.min(1, caja.clientWidth / 1000));
-  new ResizeObserver(ajustar).observe(caja);
-  ajustar();
+// Escala cada réplica de pantalla (diseñada a 1000 px) al ancho disponible.
+const escalas = document.querySelectorAll(".demo-escala");
+const ajustar = (caja) => caja.style.setProperty("--demo-k", Math.min(1, caja.clientWidth / 1000));
+const observador = new ResizeObserver((entradas) => entradas.forEach((e) => ajustar(e.target)));
+escalas.forEach((caja) => {
+  observador.observe(caja);
+  ajustar(caja);
+});
+
+// Fechas relativas a hoy en las pantallas de ejemplo, para que nunca queden vencidas.
+const hoy = new Date();
+document.querySelectorAll("[data-dias]").forEach((el) => {
+  const f = new Date(hoy);
+  f.setDate(f.getDate() + Number(el.dataset.dias));
+  el.textContent = f.toLocaleDateString("es-PY", { day: "2-digit", month: "2-digit", year: "numeric" });
+});
+const fechaHoy = $("#demo-fecha");
+if (fechaHoy) fechaHoy.textContent = hoy.toLocaleDateString("es-PY", { day: "2-digit", month: "2-digit", year: "numeric" });
+
+// Galería: flechas, puntos y deslizamiento táctil (el desplazamiento lo hace el propio navegador).
+const pista = $("#pista");
+if (pista) {
+  const puntos = [...document.querySelectorAll("#puntos .punto")];
+  const ir = (i) => {
+    const n = puntos.length;
+    const destino = (i + n) % n;
+    pista.scrollTo({ left: destino * pista.clientWidth, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  };
+  const actual = () => Math.round(pista.scrollLeft / pista.clientWidth);
+  $("#ant").addEventListener("click", () => ir(actual() - 1));
+  $("#sig").addEventListener("click", () => ir(actual() + 1));
+  puntos.forEach((p, i) => p.addEventListener("click", () => ir(i)));
+  pista.addEventListener("scroll", () => puntos.forEach((p, i) => p.setAttribute("aria-current", i === actual() ? "true" : "false")), { passive: true });
+  puntos.forEach((p) => p.setAttribute("aria-current", "false"));
+  puntos[0].setAttribute("aria-current", "true");
 }
