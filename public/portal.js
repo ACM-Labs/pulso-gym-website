@@ -36,8 +36,10 @@ function pintarPlanes() {
       precio.className = "precio";
       if (p.precioAnterior) {
         const ahorro = Math.round((1 - p.precio / p.precioAnterior) * 100);
+        const antes = Object.assign(document.createElement("s"), { className: "antes", textContent: monto(p.precioAnterior) });
+        antes.prepend(Object.assign(document.createElement("span"), { className: "sr-only", textContent: "Precio anterior: " }));
         precio.append(
-          Object.assign(document.createElement("s"), { className: "antes", textContent: monto(p.precioAnterior) }),
+          antes,
           Object.assign(document.createElement("span"), { className: "ahorro", textContent: `−${ahorro}%` }),
         );
       }
@@ -46,6 +48,7 @@ function pintarPlanes() {
       const ul = document.createElement("ul");
       p.incluye.forEach((i) => ul.append(Object.assign(document.createElement("li"), { textContent: i })));
       const boton = Object.assign(document.createElement("a"), { className: "boton" + (p.destacado ? "" : " claro"), href: "#registro", textContent: "Solicitar este plan" });
+      boton.setAttribute("aria-label", `Solicitar el plan ${p.nombre}`);
       boton.addEventListener("click", () => (selector.value = p.id));
       art.append(
         Object.assign(document.createElement("h3"), { textContent: p.nombre }),
@@ -82,6 +85,8 @@ function cambiarDivisa(nueva, guardar) {
   }
   pintarNota();
   if (datos) pintarPlanes();
+  // Solo cuando la persona cambia la divisa: un aviso corto, sin releer todos los planes.
+  if (guardar) $("#estado-divisa").textContent = `Precios en ${$("#divisa").selectedOptions[0].textContent}.`;
 }
 
 async function cargarPlanes() {
@@ -126,6 +131,25 @@ function marcarErrores(errores = {}) {
   primero?.focus();
 }
 
+// Validación al salir de cada campo (el servidor repite las mismas reglas).
+const REGLAS = {
+  contacto: (v) => (v.trim().length < 3 || !v.trim().includes(" ") ? "Escribe tu nombre completo." : ""),
+  telefono: (v) => ((v.match(/\d/g) ?? []).length < 6 || !/^[\d\s+()\-]+$/.test(v) ? "Escribe un número de contacto válido." : ""),
+  correo: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? "" : "Escribe un correo válido."),
+};
+function validarCampo(el) {
+  const msg = REGLAS[el.name]?.(el.value) ?? "";
+  const campo = el.closest(".campo");
+  campo.toggleAttribute("data-error", Boolean(msg));
+  campo.querySelector(".mensaje-error").textContent = msg;
+  el.setAttribute("aria-invalid", msg ? "true" : "false");
+}
+Object.keys(REGLAS).forEach((n) => {
+  const el = form?.elements[n];
+  el?.addEventListener("blur", () => el.value && validarCampo(el));
+  el?.addEventListener("input", () => el.getAttribute("aria-invalid") === "true" && validarCampo(el));
+});
+
 function avisar(tipo, mensaje) {
   estado.hidden = !mensaje;
   estado.className = "estado-envio " + (tipo ?? "");
@@ -145,8 +169,16 @@ form?.addEventListener("submit", async (e) => {
     const cuerpo = await r.json().catch(() => ({}));
     if (r.ok) {
       marcarErrores();
-      $("#zona-formulario").innerHTML =
-        '<div class="formulario exito" style="display:block"><div class="icono">✓</div><h3>¡Solicitud enviada!</h3><p>Gracias. El equipo de ACM Labs te contactará pronto.</p></div>';
+      const exito = document.createElement("div");
+      exito.className = "formulario exito";
+      exito.setAttribute("role", "status");
+      exito.style.display = "block";
+      const icono = Object.assign(document.createElement("div"), { className: "icono", textContent: "✓" });
+      icono.setAttribute("aria-hidden", "true");
+      const titulo = Object.assign(document.createElement("h3"), { textContent: "¡Solicitud enviada!", tabIndex: -1 });
+      exito.append(icono, titulo, Object.assign(document.createElement("p"), { textContent: "Gracias. El equipo de ACM Labs te contactará pronto." }));
+      $("#zona-formulario").replaceChildren(exito);
+      titulo.focus();
       return;
     }
     if (cuerpo.errores) marcarErrores(cuerpo.errores);

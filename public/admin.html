@@ -10,27 +10,28 @@
   <link rel="stylesheet" href="/estilos.css">
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor"><a class="logo" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Solicitudes</a><nav class="menu"><button class="boton claro" id="salir" hidden>Salir</button></nav></div></header>
+  <header class="cabecera"><div class="contenedor dos"><a class="logo" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Solicitudes</a><nav class="menu-acciones" aria-label="Sesión"><button class="boton claro" id="salir" hidden>Salir</button></nav></div></header>
   <main class="contenedor" style="padding:32px 0">
     <form id="acceso" class="formulario" style="max-width:420px;grid-template-columns:1fr">
-      <div class="campo"><label for="clave">Clave de administración</label><input id="clave" type="password" autocomplete="off" required></div>
-      <div class="estado-envio mal" id="error" hidden></div>
+      <div class="campo"><label for="clave">Clave de administración</label><input id="clave" type="password" autocomplete="current-password" required aria-describedby="error"></div>
+      <div class="estado-envio mal" id="error" role="alert" hidden></div>
       <button class="boton" type="submit">Entrar</button>
     </form>
     <div id="panel" hidden>
-      <p id="resumen" style="color:var(--texto-suave)"></p>
-      <div class="tabla-scroll"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Contacto</th><th>Plan</th><th>Estado</th></tr></thead><tbody id="filas"></tbody></table></div>
+      <p id="resumen" role="status" style="color:var(--texto-suave)"></p>
+      <p id="aviso" class="estado-envio mal" role="alert" hidden></p>
+      <div class="tabla-scroll"><table><thead><tr><th scope="col">Fecha</th><th scope="col">Nombre</th><th scope="col">Contacto</th><th scope="col">Plan</th><th scope="col">Estado</th></tr></thead><tbody id="filas"></tbody></table></div>
     </div>
   </main>
   <script>
     const $ = (s) => document.querySelector(s);
-    const ESTADOS = ["nueva", "contactada", "cerrada", "descartada"];
+    const ESTADOS = { nueva: "Nueva", contactada: "Contactada", cerrada: "Cerrada", descartada: "Descartada" };
     const PLANES = { mensual: "Plan Mensual", anual: "Plan Anual", perpetuo: "De por vida" };
     const TAM = { "hasta-100": "hasta 100", "101-300": "101–300", "301-800": "301–800", "mas-800": "más de 800" };
     let clave = sessionStorage.getItem("clave") ?? "";
     const api = (metodo, cuerpo) => fetch("/api/solicitudes", { method: metodo, headers: { Authorization: "Bearer " + clave, "Content-Type": "application/json" }, body: cuerpo && JSON.stringify(cuerpo) });
     const celda = (...nodos) => { const td = document.createElement("td"); td.append(...nodos); return td; };
-    const linea = (t) => { const d = document.createElement("div"); d.textContent = t; return d; };
+    const linea = (t) => { const d = document.createElement("div"); d.append(t); return d; };
 
     async function cargar() {
       const r = await api("GET");
@@ -38,13 +39,31 @@
       const { solicitudes } = await r.json();
       $("#acceso").hidden = true; $("#panel").hidden = false; $("#salir").hidden = false;
       $("#resumen").textContent = `${solicitudes.length} solicitudes, ${solicitudes.filter((s) => s.estado === "nueva").length} nuevas.`;
+      if (!solicitudes.length) $("#resumen").textContent = "Todavía no hay solicitudes.";
       $("#filas").replaceChildren(...solicitudes.map((s) => {
         const tr = document.createElement("tr");
         const sel = document.createElement("select");
-        ESTADOS.forEach((e) => sel.append(new Option(e, e, false, e === s.estado)));
-        sel.addEventListener("change", () => api("PATCH", { id: Number(s.id), estado: sel.value }));
+        sel.setAttribute("aria-label", "Estado de la solicitud de " + s.contacto);
+        Object.entries(ESTADOS).forEach(([v, t]) => sel.append(new Option(t, v, false, v === s.estado)));
+        let previo = s.estado;
+        sel.addEventListener("change", async () => {
+          sel.disabled = true;
+          try {
+            const r = await api("PATCH", { id: Number(s.id), estado: sel.value });
+            if (!r.ok) throw new Error();
+            previo = sel.value;
+            $("#aviso").hidden = true;
+          } catch {
+            sel.value = previo;
+            $("#aviso").hidden = false;
+            $("#aviso").textContent = "No se pudo guardar el cambio de estado. Inténtalo de nuevo.";
+          } finally {
+            sel.disabled = false;
+          }
+        });
         const mail = Object.assign(document.createElement("a"), { href: "mailto:" + s.correo, textContent: s.correo });
-        const datos = [mail, linea(s.telefono), ...(s.gimnasio ? [linea(s.gimnasio + (s.ciudad ? ", " + s.ciudad : ""))] : []), ...(s.mensaje ? [linea("“" + s.mensaje + "”")] : [])];
+        const tel = Object.assign(document.createElement("a"), { href: "tel:" + s.telefono.replace(/[^\d+]/g, ""), textContent: s.telefono });
+        const datos = [mail, linea(tel), ...(s.gimnasio ? [linea(s.gimnasio + (s.ciudad ? ", " + s.ciudad : ""))] : []), ...(s.mensaje ? [linea("“" + s.mensaje + "”")] : [])];
         tr.append(celda(new Date(s.creada).toLocaleString("es-PY")), celda(s.contacto), celda(...datos), celda(PLANES[s.plan] ?? "—"), celda(sel));
         return tr;
       }));

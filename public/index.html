@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#7c3aed">
   <title>Pulso Gym | Sistema de gestión para gimnasios</title>
   <meta name="description" content="Pulso Gym es el sistema de ACM Labs para administrar tu gimnasio: clientes, planes, cobros, caja, productos, informes y más. Conoce los planes y solicita el tuyo.">
   <meta property="og:title" content="Pulso Gym | Sistema de gestión para gimnasios">
@@ -13,13 +14,14 @@
   <link rel="stylesheet" href="/estilos.css">
 </head>
 <body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
   <header class="cabecera">
     <div class="contenedor">
       <a class="logo" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Pulso Gym</a>
       <nav class="menu-centro" aria-label="Principal">
+        <a href="#capturas">Capturas</a>
         <a href="#sistema">El sistema</a>
         <a href="#planes">Planes</a>
-        <a href="#capturas">Capturas</a>
         <a href="#como-funciona">Cómo empezar</a>
       </nav>
       <div class="menu-acciones">
@@ -29,7 +31,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="contenido" tabindex="-1">
     <div class="portada">
       <div class="contenedor">
         <div class="portada-texto">
@@ -261,19 +263,28 @@
           <h2>Todo lo que necesita la recepción de tu gimnasio</h2>
           <p>Cada módulo está pensado para el trabajo diario: cobrar rápido, saber quién debe y cerrar la caja sin errores.</p>
         </div>
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+          <symbol id="k-recibo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol>
+          <symbol id="k-regla" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16L16 3l5 5L8 21zM7 12l2 2M10 9l2 2M13 6l2 2"/></symbol>
+          <symbol id="k-pesa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7v10M3 10v4M18 7v10M21 10v4M6 12h12"/></symbol>
+          <symbol id="k-candado" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+          <symbol id="k-importar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+          <symbol id="k-escudo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></symbol>
+          <symbol id="k-refrescar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 00-14-4L4 9M4 4v5h5M4 13a8 8 0 0014 4l2-2M20 20v-5h-5"/></symbol>
+        </defs></svg>
         <div class="rejilla">
-          <article class="tarjeta"><div class="icono">👥</div><h3>Clientes</h3><p>Ficha completa con cédula o RUC, código de cliente, historial y deuda a la vista.</p></article>
-          <article class="tarjeta"><div class="icono">🎟️</div><h3>Planes y membresías</h3><p>Vende, renueva, congela y programa renovaciones. Vencimientos siempre claros.</p></article>
-          <article class="tarjeta"><div class="icono">💵</div><h3>Cobros, caja y gastos</h3><p>Efectivo y transferencia, apertura y cierre de caja, deudas con pagos parciales.</p></article>
-          <article class="tarjeta"><div class="icono">🧾</div><h3>Recibos</h3><p>Comprobantes internos con tu logo, listos para impresora térmica o común.</p></article>
-          <article class="tarjeta"><div class="icono">🛒</div><h3>Productos e inventario</h3><p>Ventas en mostrador, compras a proveedores, stock mínimo y alertas.</p></article>
-          <article class="tarjeta"><div class="icono">📊</div><h3>Informes</h3><p>Diez informes de ingresos, deudas, ventas y más, exportables a Excel y CSV.</p></article>
-          <article class="tarjeta"><div class="icono">📏</div><h3>Mediciones corporales</h3><p>Peso, IMC, grasa y evolución de cada cliente con comparaciones.</p></article>
-          <article class="tarjeta"><div class="icono">🏋️</div><h3>Entrenadores</h3><p>Disponibilidad semanal y clientes asignados con historial.</p></article>
-          <article class="tarjeta"><div class="icono">🔐</div><h3>Usuarios y permisos</h3><p>Roles a medida y auditoría de las operaciones sensibles.</p></article>
-          <article class="tarjeta"><div class="icono">📥</div><h3>Importación desde Excel</h3><p>Trae tus clientes con su membresía y saldo desde tu planilla actual.</p></article>
-          <article class="tarjeta"><div class="icono">🛟</div><h3>Copias de seguridad</h3><p>Automáticas y verificadas, con restauración guiada si cambias de equipo.</p></article>
-          <article class="tarjeta"><div class="icono">🔄</div><h3>Actualizaciones firmadas</h3><p>Versiones nuevas con copia previa y vuelta atrás si algo falla.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-users"/></svg></div><h3>Clientes</h3><p>Ficha completa con cédula o RUC, código de cliente, historial y deuda a la vista.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg></div><h3>Planes y membresías</h3><p>Vende, renueva, congela y programa renovaciones. Vencimientos siempre claros.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wallet"/></svg></div><h3>Cobros, caja y gastos</h3><p>Efectivo y transferencia, apertura y cierre de caja, deudas con pagos parciales.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-recibo"/></svg></div><h3>Recibos</h3><p>Comprobantes internos con tu logo, listos para impresora térmica o común.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-box"/></svg></div><h3>Productos e inventario</h3><p>Ventas en mostrador, compras a proveedores, stock mínimo y alertas.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chart"/></svg></div><h3>Informes</h3><p>Diez informes de ingresos, deudas, ventas y más, exportables a Excel y CSV.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-regla"/></svg></div><h3>Mediciones corporales</h3><p>Peso, IMC, grasa y evolución de cada cliente con comparaciones.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-pesa"/></svg></div><h3>Entrenadores</h3><p>Disponibilidad semanal y clientes asignados con historial.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-candado"/></svg></div><h3>Usuarios y permisos</h3><p>Roles a medida y auditoría de las operaciones sensibles.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-importar"/></svg></div><h3>Importación desde Excel</h3><p>Trae tus clientes con su membresía y saldo desde tu planilla actual.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-escudo"/></svg></div><h3>Copias de seguridad</h3><p>Automáticas y verificadas, con restauración guiada si cambias de equipo.</p></article>
+          <article class="tarjeta"><div class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#k-refrescar"/></svg></div><h3>Actualizaciones firmadas</h3><p>Versiones nuevas con copia previa y vuelta atrás si algo falla.</p></article>
         </div>
       </div>
     </section>
@@ -293,7 +304,8 @@
           </select>
           <span id="nota-divisa" class="nota-divisa" hidden></span>
         </div>
-        <div class="planes" id="lista-planes" aria-live="polite"><noscript>Activa JavaScript para ver los planes o escríbenos desde el formulario.</noscript></div>
+        <p id="estado-divisa" class="sr-only" role="status"></p>
+        <div class="planes" id="lista-planes"><noscript>Activa JavaScript para ver los planes o escríbenos desde el formulario.</noscript></div>
       </div>
     </section>
 
@@ -321,14 +333,15 @@
         </aside>
         <div id="zona-formulario">
           <form class="formulario" id="formulario" novalidate>
-            <div class="campo ancho"><label for="contacto">Nombre completo</label><input id="contacto" name="contacto" autocomplete="name" required maxlength="120"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="telefono">Número de contacto</label><input id="telefono" name="telefono" type="tel" autocomplete="tel" required maxlength="40" placeholder="0981 123 456"><span class="mensaje-error"></span></div>
-            <div class="campo"><label for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" autocomplete="email" required maxlength="160"><span class="mensaje-error"></span></div>
-            <div class="campo ancho"><label for="plan">Plan</label><select id="plan" name="plan"><option value="">Elige un plan</option></select><span class="mensaje-error"></span></div>
+            <p class="nota-form">Los campos con <span class="req" aria-hidden="true">*</span><span class="sr-only">asterisco</span> son obligatorios.</p>
+            <div class="campo ancho"><label for="contacto">Nombre completo <span class="req" aria-hidden="true">*</span></label><input id="contacto" name="contacto" autocomplete="name" required aria-required="true" aria-describedby="e-contacto" maxlength="120"><span class="mensaje-error" id="e-contacto"></span></div>
+            <div class="campo"><label for="telefono">Número de contacto <span class="req" aria-hidden="true">*</span></label><input id="telefono" name="telefono" type="tel" autocomplete="tel" required aria-required="true" aria-describedby="e-telefono" maxlength="40" placeholder="0981 123 456"><span class="mensaje-error" id="e-telefono"></span></div>
+            <div class="campo"><label for="correo">Correo electrónico <span class="req" aria-hidden="true">*</span></label><input id="correo" name="correo" type="email" autocomplete="email" required aria-required="true" aria-describedby="e-correo" maxlength="160"><span class="mensaje-error" id="e-correo"></span></div>
+            <div class="campo ancho"><label for="plan">Plan <small>(opcional)</small></label><select id="plan" name="plan" aria-describedby="e-plan"><option value="">Elige un plan</option></select><span class="mensaje-error" id="e-plan"></span></div>
             <div class="campo ancho trampa" aria-hidden="true"><label for="sitio">Sitio web</label><input id="sitio" name="sitio" tabindex="-1" autocomplete="off"></div>
             <div class="campo ancho" id="campo-acepto">
-              <label class="consentimiento"><input type="checkbox" id="acepto" name="acepto"><span>Acepto que ACM Labs use mis datos para contactarme sobre Pulso Gym, según la <a href="/privacidad" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
-              <span class="mensaje-error"></span>
+              <label class="consentimiento"><input type="checkbox" id="acepto" name="acepto" required aria-required="true" aria-describedby="e-acepto"><span>Acepto que ACM Labs use mis datos para contactarme sobre Pulso Gym, según la <a href="/privacidad" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
+              <span class="mensaje-error" id="e-acepto"></span>
             </div>
             <div class="estado-envio" id="estado-envio" role="status" hidden></div>
             <div class="campo ancho"><button class="boton grande" type="submit" id="enviar">Enviar solicitud</button></div>
