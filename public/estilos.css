@@ -296,3 +296,19 @@ th { color: var(--texto-suave); font-weight: 600; white-space: nowrap; }
 .divisa select { font: inherit; color: var(--texto); background: var(--tarjeta); border: 1px solid var(--borde-campo); border-radius: 10px; padding: 8px 12px; min-height: 40px; }
 .divisa select:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
 .nota-divisa { color: var(--texto-suave); font-size: .85rem; }
+
+/* Maqueta en móvil: sin barra lateral y con 520 px de ancho de diseño (en vez de 1000), para que el texto sea legible.
+   El alto lo calcula portal.js según el contenido de cada pantalla. */
+@media (max-width: 640px) {
+  .demo-escala { aspect-ratio: auto; height: var(--demo-h, 420px); }
+  .demo-lienzo { width: 520px; height: auto; }
+  .d-lat, .d-busq { display: none; }
+  .d-cont { border-top: 0; padding: 14px 14px 16px; }
+  .d-dos, .d-dos.inv, .d-dos.rec { grid-template-columns: 1fr; }
+  .d-fila, .d-fila.c3, .d-fila.c4 { grid-template-columns: 1fr 1fr; }
+  .d-tab th, .d-tab td { white-space: normal; padding: 6px 8px; }
+  .d-tab th { font-size: 9px; }
+  .d-barra { flex-wrap: wrap; }
+  .d-malla .grande b { font-size: 26px; white-space: nowrap; }
+  .d-pasos { flex-wrap: wrap; }
+}

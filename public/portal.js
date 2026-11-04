@@ -195,7 +195,17 @@ cargarPlanes();
 
 // Escala cada réplica de pantalla (diseñada a 1000 px) al ancho disponible.
 const escalas = document.querySelectorAll(".demo-escala");
-const ajustar = (caja) => caja.style.setProperty("--demo-k", Math.min(1, caja.clientWidth / 1000));
+const movil = matchMedia("(max-width: 640px)");
+const ajustar = (caja) => {
+  if (movil.matches) {
+    const k = caja.clientWidth / 520;
+    caja.style.setProperty("--demo-k", k);
+    caja.style.setProperty("--demo-h", `${Math.ceil(caja.firstElementChild.offsetHeight * k)}px`);
+  } else {
+    caja.style.setProperty("--demo-k", Math.min(1, caja.clientWidth / 1000));
+    caja.style.removeProperty("--demo-h");
+  }
+};
 const observador = new ResizeObserver((entradas) => entradas.forEach((e) => ajustar(e.target)));
 escalas.forEach((caja) => {
   observador.observe(caja);
