@@ -4,19 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Panel de solicitudes de Pulso Gym.">
   <meta name="robots" content="noindex, nofollow">
   <title>Solicitudes | Pulso Gym</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/estilos.css">
+  <link rel="stylesheet" href="/acceso.css">
 </head>
 <body>
   <header class="cabecera"><div class="contenedor dos"><a class="logo" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Solicitudes</a><nav class="menu-acciones" aria-label="Sesión"><button class="boton claro" id="salir" hidden>Salir</button></nav></div></header>
+  <div class="acceso-pantalla">
+    <aside class="acceso-marca">
+      <a class="acceso-logo" href="/"><img src="/favicon.svg" alt="" width="36" height="36">Pulso Gym</a>
+      <svg class="acceso-pulso" viewBox="30 50 220 170" fill="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M42 136h34l22-62 40 112 22-58h54" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </aside>
+    <div class="acceso-cuerpo">
+      <form id="acceso">
+        <h1>Solicitudes</h1>
+        <div class="acceso-campo"><label for="clave">Clave de administración</label><input id="clave" type="password" autocomplete="current-password" required aria-describedby="error"></div>
+        <div class="acceso-error" id="error" role="alert" hidden></div>
+        <button class="acceso-boton" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
   <main class="contenedor" style="padding:32px 0">
-    <form id="acceso" class="formulario" style="max-width:420px;grid-template-columns:1fr">
-      <div class="campo"><label for="clave">Clave de administración</label><input id="clave" type="password" autocomplete="current-password" required aria-describedby="error"></div>
-      <div class="estado-envio mal" id="error" role="alert" hidden></div>
-      <button class="boton" type="submit">Entrar</button>
-    </form>
     <div id="panel" hidden>
       <p id="resumen" role="status" style="color:var(--texto-suave)"></p>
       <p id="aviso" class="estado-envio mal" role="alert" hidden></p>

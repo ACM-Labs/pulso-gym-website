@@ -1,0 +1,81 @@
+/* Hallmark · shape: kept · genre: modern-minimal · theme: brand · redesign: full
+ * paper: oklch(98.5% 0.004 295) · accent: oklch(54% 0.24 293) · display: system-ui · body: system-ui · hero: kept · nav: kept · footer: kept · signature: the logo's own pulse line, enlarged across the brand panel
+ * axes: light/system/violet · posture: split · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V3 · weakest: V, a split screen is the safe shape for a sign-in; the pulse line enlarged from the real logo is what makes it Pulso Gym's */
+/* Pantalla de acceso de /admin. Solo la carga admin.html; el panel de solicitudes sigue con estilos.css. */
+:root {
+  --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px;
+  --text-sm: 0.875rem; --text-md: 1rem; --text-title: clamp(2rem, 1.5vw + 1.5rem, 2.75rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-draw: 1400ms;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius-input: 10px;
+  --color-paper: oklch(98.5% 0.004 295); --color-paper-2: oklch(95.5% 0.012 295);
+  --color-ink: oklch(20% 0.02 290); --color-ink-2: oklch(36% 0.02 290); --color-muted: oklch(46% 0.02 290);
+  --color-rule: oklch(86% 0.012 290); --color-field: oklch(60% 0.02 290);
+  --color-accent: oklch(54% 0.24 293); --color-accent-strong: oklch(47% 0.24 293); --color-accent-ink: oklch(99% 0.003 293);
+  --color-focus: oklch(54% 0.24 293);
+  --color-error: oklch(48% 0.19 27);
+  --color-brand-bg: oklch(27% 0.1 293); --color-brand-line: oklch(76% 0.15 293); --color-brand-ink: oklch(97% 0.01 293);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: oklch(17% 0.01 290); --color-paper-2: oklch(21% 0.012 290);
+    --color-ink: oklch(96% 0.006 290); --color-ink-2: oklch(84% 0.01 290); --color-muted: oklch(72% 0.015 290);
+    --color-rule: oklch(32% 0.012 290); --color-field: oklch(56% 0.015 290);
+    --color-accent: oklch(70% 0.17 293); --color-accent-strong: oklch(76% 0.15 293); --color-accent-ink: oklch(17% 0.03 293);
+    --color-focus: oklch(76% 0.15 293);
+    --color-error: oklch(76% 0.15 27);
+    --color-brand-bg: oklch(21% 0.07 293); --color-brand-line: oklch(70% 0.17 293);
+  }
+}
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); }
+::selection { background: color-mix(in oklab, var(--color-accent) 24%, transparent); color: var(--color-ink); }
+
+/* El acceso ocupa la pantalla; al entrar (#acceso queda oculto) desaparece y se ve el panel. */
+body:has(#acceso:not([hidden])) > .cabecera,
+body:has(#acceso:not([hidden])) > main { display: none; }
+.acceso-pantalla:has(#acceso[hidden]) { display: none; }
+.acceso-pantalla [hidden] { display: none !important; }
+
+.acceso-pantalla { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: 100vh; min-height: 100dvh; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); }
+
+/* Panel de marca */
+.acceso-marca { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-xl); padding: var(--space-xl); background: var(--color-brand-bg); color: var(--color-brand-ink); overflow: hidden; }
+.acceso-logo { display: inline-flex; align-items: center; gap: var(--space-sm); width: fit-content; font: 700 1.25rem/1 var(--font-display); color: inherit; text-decoration: none; }
+.acceso-logo img { width: 36px; height: 36px; }
+.acceso-logo:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.acceso-logo:focus-visible { outline: 2px solid var(--color-brand-line); outline-offset: 4px; border-radius: 6px; }
+.acceso-pulso { width: 100%; max-width: 560px; height: auto; margin-block: auto; color: var(--color-brand-line); overflow: visible; }
+.acceso-pulso path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trazo var(--dur-draw) var(--ease-out) 150ms forwards; }
+@keyframes trazo { to { stroke-dashoffset: 0; } }
+
+/* Formulario */
+.acceso-cuerpo { display: grid; place-items: center; padding: var(--space-xl) var(--space-lg); }
+#acceso { width: 100%; max-width: 400px; display: grid; gap: var(--space-lg); }
+#acceso h1 { max-width: none; font: 800 var(--text-title)/1.05 var(--font-display); letter-spacing: -0.02em; margin: 0 0 var(--space-xs); color: var(--color-ink); text-wrap: balance; }
+.acceso-campo { display: grid; gap: var(--space-xs); }
+.acceso-campo label { font: 600 var(--text-sm)/1.3 var(--font-body); color: var(--color-ink-2); }
+.acceso-campo input { width: 100%; min-height: 52px; padding: 0 var(--space-md); border: 1px solid var(--color-field); border-radius: var(--radius-input); background: var(--color-paper); color: var(--color-ink); font: 400 var(--text-md)/1.2 var(--font-body); caret-color: var(--color-accent); transition: border-color var(--dur-short) var(--ease-out); }
+.acceso-campo input:hover { border-color: var(--color-ink-2); }
+.acceso-campo input:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-accent); }
+.acceso-campo input:disabled { opacity: 0.55; cursor: not-allowed; }
+.acceso-error { margin: 0; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-input); border: 1px solid var(--color-error); background: color-mix(in oklab, var(--color-error) 9%, var(--color-paper)); color: var(--color-error); font-size: var(--text-sm); line-height: 1.4; }
+.acceso-boton { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 var(--space-lg); border: 1px solid var(--color-accent); border-radius: var(--radius-input); background: var(--color-accent); color: var(--color-accent-ink); font: 600 var(--text-md)/1 var(--font-body); cursor: pointer; transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.acceso-boton:hover { background: var(--color-accent-strong); border-color: var(--color-accent-strong); }
+.acceso-boton:active { transform: translateY(1px); }
+.acceso-boton:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.acceso-boton:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+@media (max-width: 60rem) {
+  .acceso-pantalla { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .acceso-marca { padding: var(--space-lg); gap: var(--space-lg); }
+  .acceso-pulso { max-width: 280px; }
+  .acceso-cuerpo { align-items: start; padding-top: var(--space-xl); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .acceso-pulso path { animation: none; stroke-dashoffset: 0; }
+  .acceso-campo input, .acceso-boton { transition-duration: 0.01ms; }
+}
