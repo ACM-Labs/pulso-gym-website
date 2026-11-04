@@ -284,6 +284,15 @@
           <h2>Elige tu plan</h2>
           <p>Todos incluyen el sistema completo. La diferencia está en cómo lo pagas.</p>
         </div>
+        <div class="divisa">
+          <label for="divisa">Ver precios en</label>
+          <select id="divisa" aria-describedby="nota-divisa">
+            <option value="PYG">Guaraníes (Gs.)</option>
+            <option value="USD">Dólares (US$)</option>
+            <option value="EUR">Euros (€)</option>
+          </select>
+          <span id="nota-divisa" class="nota-divisa" hidden></span>
+        </div>
         <div class="planes" id="lista-planes" aria-live="polite"><noscript>Activa JavaScript para ver los planes o escríbenos desde el formulario.</noscript></div>
       </div>
     </section>

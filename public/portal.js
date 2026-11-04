@@ -3,59 +3,112 @@ $("#anio").textContent = new Date().getFullYear();
 
 const texto = (t) => Object.assign(document.createElement("span"), { textContent: t });
 
+const SIMBOLOS = { PYG: "Gs.", USD: "US$", EUR: "€" };
+let datos = null;
+let divisa = "PYG";
+let tasas = null;
+
+// Importe en la divisa elegida. Dólares y euros son referenciales: se redondean a 5.
+function monto(gs) {
+  if (divisa === "PYG") return `Gs. ${gs.toLocaleString("es-PY")}`;
+  const v = Math.round(gs / tasas[divisa] / 5) * 5;
+  return `≈ ${SIMBOLOS[divisa]} ${v.toLocaleString("es-PY")}`;
+}
+
+function pintarPlanes() {
+  const { planes } = datos;
+  const lista = $("#lista-planes");
+  const selector = $("#plan");
+  const elegido = selector.value;
+  lista.replaceChildren(
+    ...planes.map((p) => {
+      const art = document.createElement("article");
+      art.className = "plan" + (p.destacado ? " destacado" : "");
+      const insignias = document.createElement("div");
+      insignias.className = "insignias";
+      if (p.destacado) insignias.append(Object.assign(document.createElement("span"), { className: "insignia", textContent: "Más elegido" }));
+      if (p.precioAnterior) {
+        art.classList.add("rebajado");
+        insignias.append(Object.assign(document.createElement("span"), { className: "insignia oferta", textContent: "Rebajado" }));
+      }
+      if (insignias.children.length) art.append(insignias);
+      const precio = document.createElement("div");
+      precio.className = "precio";
+      if (p.precioAnterior) {
+        const ahorro = Math.round((1 - p.precio / p.precioAnterior) * 100);
+        precio.append(
+          Object.assign(document.createElement("s"), { className: "antes", textContent: monto(p.precioAnterior) }),
+          Object.assign(document.createElement("span"), { className: "ahorro", textContent: `−${ahorro}%` }),
+        );
+      }
+      precio.append(p.precio == null ? texto("Consultar") : texto(monto(p.precio)));
+      precio.append(" ", Object.assign(document.createElement("small"), { textContent: p.periodo }));
+      const ul = document.createElement("ul");
+      p.incluye.forEach((i) => ul.append(Object.assign(document.createElement("li"), { textContent: i })));
+      const boton = Object.assign(document.createElement("a"), { className: "boton" + (p.destacado ? "" : " claro"), href: "#registro", textContent: "Solicitar este plan" });
+      boton.addEventListener("click", () => (selector.value = p.id));
+      art.append(
+        Object.assign(document.createElement("h3"), { textContent: p.nombre }),
+        Object.assign(document.createElement("p"), { className: "desc", textContent: p.descripcion }),
+        precio,
+        ul,
+        boton,
+      );
+      return art;
+    }),
+  );
+  selector.replaceChildren(new Option("Elige un plan", ""));
+  planes.forEach((p) => selector.append(new Option(p.nombre + (p.precio == null ? "" : ` — ${monto(p.precio)}`), p.id)));
+  selector.append(new Option("Aún no lo sé", "no-se"));
+  selector.value = elegido;
+}
+
+function pintarNota() {
+  const nota = $("#nota-divisa");
+  nota.hidden = divisa === "PYG";
+  nota.textContent = "Referencia al cambio del día; el importe exacto se confirma al contratar.";
+}
+
+function cambiarDivisa(nueva, guardar) {
+  if (!SIMBOLOS[nueva] || (nueva !== "PYG" && !tasas)) nueva = "PYG";
+  divisa = nueva;
+  $("#divisa").value = nueva;
+  if (guardar) {
+    try {
+      localStorage.setItem("divisa", nueva);
+    } catch {
+      // sin almacenamiento: la elección vale solo para esta visita
+    }
+  }
+  pintarNota();
+  if (datos) pintarPlanes();
+}
+
 async function cargarPlanes() {
   const lista = $("#lista-planes");
   const selector = $("#plan");
   try {
-    const r = await fetch("/planes.json");
-    const { moneda, planes } = await r.json();
-    lista.replaceChildren(
-      ...planes.map((p) => {
-        const art = document.createElement("article");
-        art.className = "plan" + (p.destacado ? " destacado" : "");
-        const insignias = document.createElement("div");
-        insignias.className = "insignias";
-        if (p.destacado) insignias.append(Object.assign(document.createElement("span"), { className: "insignia", textContent: "Más elegido" }));
-        if (p.precioAnterior) {
-          art.classList.add("rebajado");
-          insignias.append(Object.assign(document.createElement("span"), { className: "insignia oferta", textContent: "Rebajado" }));
-        }
-        if (insignias.children.length) art.append(insignias);
-        const precio = document.createElement("div");
-        precio.className = "precio";
-        if (p.precioAnterior) {
-          const ahorro = Math.round((1 - p.precio / p.precioAnterior) * 100);
-          precio.append(
-            Object.assign(document.createElement("s"), { className: "antes", textContent: `${moneda} ${p.precioAnterior.toLocaleString("es-PY")}` }),
-            Object.assign(document.createElement("span"), { className: "ahorro", textContent: `−${ahorro}%` }),
-          );
-        }
-        precio.append(p.precio == null ? texto("Consultar") : texto(`${moneda} ${p.precio.toLocaleString("es-PY")}`));
-        precio.append(" ", Object.assign(document.createElement("small"), { textContent: p.periodo }));
-        const ul = document.createElement("ul");
-        p.incluye.forEach((i) => ul.append(Object.assign(document.createElement("li"), { textContent: i })));
-        const boton = Object.assign(document.createElement("a"), { className: "boton" + (p.destacado ? "" : " claro"), href: "#registro", textContent: "Solicitar este plan" });
-        boton.addEventListener("click", () => (selector.value = p.id));
-        art.append(
-          Object.assign(document.createElement("h3"), { textContent: p.nombre }),
-          Object.assign(document.createElement("p"), { className: "desc", textContent: p.descripcion }),
-          precio,
-          ul,
-          boton,
-        );
-        return art;
-      }),
-    );
-    planes.forEach((p) => {
-      const precio = p.precio == null ? "" : ` — ${moneda} ${p.precio.toLocaleString("es-PY")}`;
-      selector.append(new Option(p.nombre + precio, p.id));
-    });
-    selector.append(new Option("Aún no lo sé", "no-se"));
+    const [r, d] = await Promise.all([
+      fetch("/planes.json"),
+      // La divisa se sugiere con el país de la conexión (sin pedir ubicación); si falla, quedan los guaraníes.
+      fetch("/api/divisa").then((x) => (x.ok ? x.json() : null)).catch(() => null),
+    ]);
+    datos = await r.json();
+    tasas = d?.tasas ?? null;
+    let guardada = null;
+    try {
+      guardada = localStorage.getItem("divisa");
+    } catch {
+      // ignorar
+    }
+    cambiarDivisa(guardada ?? d?.moneda ?? "PYG", false);
   } catch {
     selector.append(new Option("Aún no lo sé", "no-se"));
     lista.textContent = "No pudimos cargar los planes. Escríbenos desde el formulario y te los enviamos.";
   }
 }
+
+$("#divisa")?.addEventListener("change", (e) => cambiarDivisa(e.target.value, true));
 
 const form = $("#formulario");
 const estado = $("#estado-envio");
