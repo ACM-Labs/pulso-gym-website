@@ -27,10 +27,7 @@ function pintarPlanes() {
       const insignias = document.createElement("div");
       insignias.className = "insignias";
       if (p.destacado) insignias.append(Object.assign(document.createElement("span"), { className: "insignia", textContent: "Más elegido" }));
-      if (p.precioAnterior) {
-        art.classList.add("rebajado");
-        insignias.append(Object.assign(document.createElement("span"), { className: "insignia oferta", textContent: "Rebajado" }));
-      }
+      if (p.precioAnterior) art.classList.add("rebajado"); // el precio tachado y el −% ya lo dicen
       if (insignias.children.length) art.append(insignias);
       const precio = document.createElement("div");
       precio.className = "precio";
@@ -202,7 +199,7 @@ const ajustar = (caja) => {
     caja.style.setProperty("--demo-k", k);
     caja.style.setProperty("--demo-h", `${Math.ceil(caja.firstElementChild.offsetHeight * k)}px`);
   } else {
-    caja.style.setProperty("--demo-k", Math.min(1, caja.clientWidth / 1000));
+    caja.style.setProperty("--demo-k", Math.min(1, caja.clientWidth / caja.firstElementChild.offsetWidth));
     caja.style.removeProperty("--demo-h");
   }
 };
