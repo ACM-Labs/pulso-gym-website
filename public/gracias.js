@@ -7,6 +7,7 @@ const reloj = setInterval(() => {
   falta -= 1;
   if (falta > 0) {
     document.getElementById("cuenta").textContent = falta;
+    document.getElementById("unidad").textContent = falta === 1 ? "segundo" : "segundos";
     return;
   }
   clearInterval(reloj);

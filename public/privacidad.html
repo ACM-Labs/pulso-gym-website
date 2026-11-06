@@ -3,17 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#6d28d9">
   <title>Privacidad | Pulso Gym</title>
   <meta name="description" content="Qué datos pide ACM Labs cuando solicitas Pulso Gym, para qué los usa, dónde se guardan y cómo ejercer tus derechos.">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/sitio.css">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="/interior.css">
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor"><a class="logo" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Pulso Gym</a></div></header>
-  <main class="contenedor texto">
-    <h1>Política de privacidad</h1>
-    <p><em>Borrador: debe ser revisado por un abogado antes de publicarse como versión definitiva.</em></p>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <div class="violeta">
+    <header class="cabecera">
+      <a class="logo" href="/" aria-label="Pulso Gym, inicio"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M24 136h46l28-72 44 120 28-60h62" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></svg>pulso<small>GYM</small></a>
+      <a class="volver" href="/">Volver al inicio</a>
+    </header>
+    <section class="titulo"><h1>Política de privacidad.</h1></section>
+  </div>
+  <main id="contenido" class="texto" tabindex="-1">
+    <p class="borrador"><em>Borrador: debe ser revisado por un abogado antes de publicarse como versión definitiva.</em></p>
     <h2>Quién responde por tus datos</h2>
     <p>ACM Labs, equipo desarrollador de Pulso Gym.</p>
     <h2>Qué datos pedimos y para qué</h2>
@@ -24,8 +34,11 @@
     <p>No vendemos ni cedemos tus datos a terceros con fines publicitarios.</p>
     <h2>Tus derechos</h2>
     <p>Puedes pedirnos acceso, corrección o eliminación de tus datos escribiéndonos desde el formulario del sitio.</p>
-    <p><a href="/">← Volver al inicio</a></p>
+    <p class="volver-inicio"><a href="/">← Volver al inicio</a></p>
   </main>
-  <footer class="pie"><div class="contenedor"><div>© 2026 ACM Labs. Todos los derechos reservados.</div></div></footer>
+  <footer class="pie">
+    <img src="/acm-labs-horizontal.svg" alt="ACM Labs" width="150" height="59">
+    <span>© 2026 ACM Labs. Todos los derechos reservados.</span>
+  </footer>
 </body>
 </html>

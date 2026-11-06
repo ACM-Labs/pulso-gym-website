@@ -1,0 +1,71 @@
+/* Pulso Gym · páginas interiores (gracias, privacidad). Misma paleta 60/30/10 y tipografía que la landing. */
+:root {
+  --bg: #6d28d9;
+  --ink: #ffffff;
+  --muted: #ddd6fe;
+  --acc: #67e8f9;
+  --acc-ink: #1a0b3b;
+  --noche: #2e1065;
+  --papel: #ffffff;
+  --papel-2: #f5f3ff;
+  --tinta: #1c1530;
+  --apagado: #5b5470;
+  --f-display: "Cabinet Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-texto: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+  --m: clamp(16px, 2.8vw, 40px);
+  --sale: cubic-bezier(0.16, 1, 0.3, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--papel); color: var(--tinta); font: 400 clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)/1.6 var(--f-texto); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+h1, h2, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; }
+::selection { background: var(--acc); color: var(--acc-ink); }
+:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+.saltar { position: absolute; left: var(--m); top: -80px; z-index: 100; padding: 12px 18px; background: var(--acc); color: var(--acc-ink); font-weight: 700; text-decoration: none; }
+.saltar:focus { top: 12px; }
+
+.violeta { background: var(--bg); color: var(--ink); }
+.cabecera { display: flex; align-items: center; justify-content: space-between; padding: 24px var(--m); }
+.logo { display: inline-flex; align-items: center; gap: 10px; font: 800 1.5rem/1 var(--f-display); letter-spacing: -0.03em; text-decoration: none; color: var(--ink); }
+.logo svg { width: 30px; height: 30px; color: var(--acc); }
+.logo small { font: 700 0.6875rem/1 var(--f-texto); letter-spacing: 0.12em; opacity: 0.8; align-self: flex-end; margin-bottom: 4px; }
+.cabecera .volver { font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+.titulo { padding: clamp(48px, 9vw, 120px) var(--m) clamp(56px, 9vw, 120px); }
+.titulo h1 { font: 800 clamp(2.75rem, 1rem + 7.6vw, 8rem)/0.92 var(--f-display); letter-spacing: -0.045em; max-width: 14ch; }
+.titulo .bajada { margin-top: 28px; max-width: 44ch; color: var(--muted); font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem); line-height: 1.35; }
+
+.latido { display: block; width: min(260px, 70%); margin-top: 32px; color: var(--acc); }
+.latido path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traza 1.6s var(--sale) 0.2s forwards; }
+@keyframes traza { to { stroke-dashoffset: 0; } }
+
+.estado { margin-top: 32px; font-weight: 700; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); }
+.nota { margin-top: 12px; max-width: 54ch; color: var(--muted); font-size: 1rem; }
+.nota a { color: var(--ink); font-weight: 700; }
+.acciones { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin-top: 36px; }
+.boton { display: inline-flex; align-items: center; min-height: 56px; padding: 0 28px; background: var(--acc); color: var(--acc-ink); font-weight: 800; text-decoration: none; transition: transform 0.3s var(--sale); }
+.boton:hover { transform: translateY(-3px); }
+.enlace { font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+.cuerpo { padding: clamp(56px, 9vw, 120px) var(--m); background: var(--papel); }
+.cuerpo .columnas { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); max-width: 1200px; }
+.cuerpo h2 { font: 800 clamp(1.75rem, 1.2rem + 2vw, 3rem)/1.05 var(--f-display); letter-spacing: -0.035em; color: var(--bg); }
+.cuerpo .datos li { padding: 16px 0 16px 28px; position: relative; font-weight: 500; }
+.cuerpo .datos li::before { content: ""; position: absolute; left: 0; top: 1.4em; width: 12px; height: 12px; background: var(--bg); }
+.cuerpo .nota { color: var(--apagado); }
+
+.texto { max-width: 74ch; padding: clamp(48px, 8vw, 104px) var(--m); }
+.texto .borrador { padding: 14px 18px; background: var(--papel-2); font-weight: 500; }
+.texto h2 { margin-top: 48px; font: 800 clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)/1.1 var(--f-display); letter-spacing: -0.03em; color: var(--bg); }
+.texto p { margin-top: 14px; }
+.texto .borrador { margin-top: 0; }
+.texto .volver-inicio { margin-top: 48px; }
+.texto .volver-inicio a { font-weight: 800; color: var(--bg); }
+
+.pie { background: var(--noche); color: var(--muted); padding: 48px var(--m) 32px; font-size: 0.9375rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; }
+.pie img { width: 150px; height: auto; }
+
+@media (max-width: 800px) { .cuerpo .columnas { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .latido path { animation: none; stroke-dashoffset: 0; } .boton { transition: none; } }
